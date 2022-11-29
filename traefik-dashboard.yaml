@@ -1,0 +1,45 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: test-auth
+  namespace: traefik
+spec:
+  basicAuth:
+    secret: authsecret
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: TLSStore
+metadata:
+  name: traefik-default
+  namespace: traefik
+spec:
+  defaultCertificate:
+    secretName: traefik-cert
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: authsecret
+  namespace: traefik
+data:
+  users: c2R0ZDokYXByMSQ5NkJCbTRPSSRaOE96NjlSc09Wb2JFejNEMjdYUU8wCgo=
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: dashboard
+  namespace: traefik
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`dashboard.sdtd.marche.ovh`) && (PathPrefix(`/dashboard`) || PathPrefix(`/api`))
+      kind: Rule
+      middlewares:
+        - name: test-auth
+          namespace: traefik
+      services:
+        - name: api@internal
+          kind: TraefikService
+  tls:
+    secretName: traefik-cert

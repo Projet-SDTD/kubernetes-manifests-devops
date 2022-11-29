@@ -1,8 +1,3 @@
-# Voici un exemple de configuration de cloud-controller-manager en tant que Daemonset dans votre cluster.
-# Il suppose que vos masters peuvent executer des pods et ont le role node-role.kubernetes.io/master
-# Notez que ce Daemonset ne fonctionnera pas directement pour votre cloud, c’est juste un exemple.
-
----
 apiVersion: v1
 kind: ServiceAccount
 metadata:
@@ -89,7 +84,5 @@ spec:
         effect: NoSchedule
       - key: node.kubernetes.io/network-unavailable
         effect: NoSchedule
-      # ceci limite le fonctionnement du CCM sur des nœuds master
-      # le sélecteur de nœud peut varier en fonction de la configuration de votre cluster
       nodeSelector:
         node-role.kubernetes.io/master: "true"

@@ -189,8 +189,6 @@ spec:
             items:
             - key: Corefile
               path: Corefile
-#            - key: NodeHosts
-#              path: NodeHosts
         - name: custom-config-volume
           configMap:
             name: coredns-custom
