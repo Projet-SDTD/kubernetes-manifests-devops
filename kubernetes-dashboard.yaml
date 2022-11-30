@@ -293,22 +293,17 @@ spec:
     serverName: "kubernetes.sdtd.marche.ovh"
     insecureSkipVerify: true
 ---
-apiVersion: v1
-kind: Secret
-metadata:
-  name: authsecret
-  namespace: kubernetes-dashboard
-data:
-  users: c2R0ZDokYXByMSQ5NkJCbTRPSSRaOE96NjlSc09Wb2JFejNEMjdYUU8wCgo=
----
 apiVersion: traefik.containo.us/v1alpha1
 kind: Middleware
 metadata:
   name: test-auth
   namespace: kubernetes-dashboard
 spec:
-  basicAuth:
-    secret: authsecret
+  ipWhiteList:
+    sourceRange:
+      - 82.66.131.243
+      - 130.190.0.0/16
+      - 0.0.0.0/0
 ---
 apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRoute
