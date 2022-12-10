@@ -1,0 +1,35 @@
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: test-auth
+  namespace: longhorn-system
+spec:
+  basicAuth:
+    secret: authsecret
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: authsecret
+  namespace: longhorn-system
+data:
+  users: c2R0ZDokYXByMSQ5NkJCbTRPSSRaOE96NjlSc09Wb2JFejNEMjdYUU8wCgo=
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: longhorn-dashboard
+  namespace: longhorn-system
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`longhorn.sdtd.marche.ovh`)
+      kind: Rule
+      middlewares:
+        - name: test-auth
+          namespace: longhorn-system
+      services:
+        - name: longhorn-frontend
+          port: 80

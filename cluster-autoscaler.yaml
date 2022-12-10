@@ -157,7 +157,7 @@ spec:
             - --cloud-provider=gce
             - --skip-nodes-with-local-storage=false
             - --expander=least-waste
-            - --node-group-auto-discovery=mig:namePrefix=sdtd-k3s-workers,min=0,max=4
+            - --node-group-auto-discovery=mig:namePrefix=sdtd-k3s-workers,min=1,max=4
             - --regional
             - --scale-down-delay-after-add=2m
             - --scale-down-unneeded-time=2m
