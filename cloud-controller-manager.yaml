@@ -77,9 +77,6 @@ spec:
       - key: node.cloudprovider.kubernetes.io/uninitialized
         value: "true"
         effect: NoSchedule
-      - key: CriticalAddonsOnly
-        value: "true"
-        effect: NoExecute
       - key: node-role.kubernetes.io/master
         effect: NoSchedule
       - key: node.kubernetes.io/network-unavailable

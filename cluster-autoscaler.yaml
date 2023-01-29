@@ -152,7 +152,7 @@ spec:
               memory: 600Mi
           command:
             - ./cluster-autoscaler
-            - --v=2
+            - --v=4
             - --stderrthreshold=info
             - --cloud-provider=gce
             - --skip-nodes-with-local-storage=false
@@ -164,8 +164,5 @@ spec:
       nodeSelector:
         node-role.kubernetes.io/master: "true"
       tolerations:
-      - key: CriticalAddonsOnly
-        value: "true"
-        effect: NoExecute
       - key: node-role.kubernetes.io/master
         effect: NoSchedule
